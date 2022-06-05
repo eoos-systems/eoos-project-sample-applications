@@ -1,8 +1,8 @@
-# EOOS Automotive Sample Application
+# EOOS Automotive Sample Applications
 
-This is sample application built within an EOOS Automotive system which can be:
+The sample applications built within an EOOS Automotive system which can be:
 - EOOS Automotive WIN32.
 - EOOS Automotive POSIX.
 - EOOS Automotive RTOS.
 
-This is sample application aims to ISO 26262 is complied with AUTOSAR C++14 and MISRA C++ rules.
+The sample applications developed aiming to ISO 26262 and are complied with AUTOSAR C++14 and MISRA C++.

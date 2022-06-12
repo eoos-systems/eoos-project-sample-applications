@@ -14,3 +14,7 @@ target_link_libraries(target-eoos-app-hello-world
 PRIVATE
     eoos::eoos
 )
+
+set_target_properties(target-eoos-app-hello-world PROPERTIES
+    OUTPUT_NAME EoosAppHelloWorld
+)

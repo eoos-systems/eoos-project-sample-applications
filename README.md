@@ -6,7 +6,7 @@ EOOS Automotive is a system for **cross-platform development** of applications i
 which is developed within **ISO C++ standards**, complied with **MISRA C++:2008** and 
 **AUTOSAR C++14 Coding Guidelines**, and relies on **ISO 26262**
 
-EOOS provides API to develop embedded software for real time **safety-critical systems** and can be **ported** 
+EOOS provides API to develop embedded software for **real time safety-critical systems** and can be **ported** 
 not only **on many MCUs and DSPs**, but also **supports POSIX and WIN32 systems**.
 
 This **EOOS Sample Applications** give fast start for developing **safety-critical applications**. 

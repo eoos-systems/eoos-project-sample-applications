@@ -17,6 +17,6 @@ else()
     message(FATAL_ERROR "EOOS Sample Application cannot be built for your OS")
 endif()
 
-find_package(Eoos 0.9.0 REQUIRED)
+find_package(EOOS 0.9.0 REQUIRED)
 
 add_subdirectory(codebase)

@@ -11,7 +11,7 @@ not only **on many MCUs and DSPs**, but also **supports POSIX and WIN32 systems*
 
 This **EOOS Sample Applications** give fast start for developing **safety-critical applications**. 
 Using EOOS, you can **develop business-logic** of application on **any Linux or Windows operating systems**, 
-and after easily **debug and test** it either on **real hardware under EOOS Automotive RT™**, or on **a safety-certified OS** like **QNX**.
+and after easily **debug and test** it either on **real hardware under EOOS Automotive RT**, or on **a safety-certified OS** like **QNX**.
 
 The sample applications built within an EOOS Automotive system which can be:
 - **[EOOS Automotive WIN32](https://gitflic.ru/project/baigudin-software/eoos-project-if-win32)**

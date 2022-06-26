@@ -17,7 +17,7 @@ int32_t Program::start(api::List<char_t*>& args)
     {
         lib::Stream::cerr() 
             << "Goodbye, World.\n"
-            << "You do not want more than three God's directive given.\n";
+            << "You do not want more than three God's directives given.\n";
         return -1;
     }
     lib::UniquePointer< api::ListIterator<char_t*> > it( args.getListIterator(0) );
@@ -41,7 +41,7 @@ int32_t Program::start(api::List<char_t*>& args)
     }
     else
     {
-        lib::Stream::cout() << "God has pity on you :)";
+        lib::Stream::cout() << "God has pity on you :)\n";
     }
     return 0;
 }

@@ -9,9 +9,17 @@ add_executable(target-eoos-app-hello-world
 
 target_link_libraries(target-eoos-app-hello-world
 PRIVATE
+    eoos::main
+)
+
+if(UNIX)
+target_link_libraries(target-eoos-app-hello-world
+PRIVATE
     Threads::Threads
     eoos::main
 )
+endif()
+
 
 set_target_properties(target-eoos-app-hello-world PROPERTIES
     OUTPUT_NAME EoosAppHelloWorld

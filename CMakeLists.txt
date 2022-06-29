@@ -11,14 +11,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(WIN32)
-    message(STATUS "EOOS Apps is building for WIN32")
-    # Enable the __cplusplus macro to report the supported standard as it is off by default.
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:__cplusplus" CACHE STRING "" FORCE)
+message(STATUS "EOOS Apps is building for WIN32")
+# Enable the __cplusplus macro to report the supported standard as it is off by default.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:__cplusplus" CACHE STRING "" FORCE)
 elseif(UNIX)
-    message(STATUS "EOOS Apps is building for UNIX")
-    find_package(Threads REQUIRED)
+message(STATUS "EOOS Apps is building for UNIX")
+find_package(Threads REQUIRED)
 else()
-    message(FATAL_ERROR "EOOS Sample Application cannot be built for your OS")
+message(FATAL_ERROR "EOOS Sample Application cannot be built for your OS")
 endif()
 
 find_package(EOOS 0.9.0 REQUIRED)

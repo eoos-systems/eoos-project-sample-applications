@@ -86,10 +86,10 @@ but this configuration must match the EOOS configuration installed on your opera
 
 #### 2.1. Hello, World Application
 
-The application is located in *REPOSITORY/APPS/codebase/app-hello-world* directory on Linux
-or *REPOSITORY/APPS/codebase/app-hello-world/RelWithDebInfo* directory on Windows, 
-and after the project is built, we need to go to the application directory 
-by executing the command below.
+The application is located after the project is built on 
+- Linux: *REPOSITORY/APPS/codebase/app-hello-world* (in the examples below)
+- Windows: *REPOSITORY/APPS/codebase/app-hello-world/RelWithDebInfo*
+We need to go to the application directory by executing the command below.
 
 ```
 REPOSITORY/APPS/build$ cd codebase/app-hello-world

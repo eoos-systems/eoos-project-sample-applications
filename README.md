@@ -86,17 +86,19 @@ but this configuration must match the EOOS configuration installed on your opera
 
 #### 2.1. Hello, World Application
 
-The application is located in *REPOSITORY/APPS/codebase/app-hello-world* directory, and after the project is built,
-we need to go to the application directory by executing the command below.
+The application is located in *REPOSITORY/APPS/codebase/app-hello-world* directory on Linux
+or *REPOSITORY/APPS/codebase/app-hello-world/RelWithDebInfo* directory on Windows, 
+and after the project is built, we need to go to the application directory 
+by executing the command below.
 
 ```
-REPOSITORY/APPS/build$ cd codebase/app-hello-world/RelWithDebInfo
+REPOSITORY/APPS/build$ cd codebase/app-hello-world
 ```
 
 The application writes its input arguments to *stdout*.
 
 ```
-REPOSITORY/APPS/build/codebase/app-hello-world/RelWithDebInfo$ ./EoosAppHelloWorld Think Create Win
+REPOSITORY/APPS/build/codebase/app-hello-world$ ./EoosAppHelloWorld Think Create Win
 Hello, World!
 Your program name is EoosAppHelloWorld
 You've got the next directives from God:
@@ -108,7 +110,7 @@ Directive 3: Win
 The application writes message to *stdout* if no input arguments passed.
 
 ```
-REPOSITORY/APPS/build/codebase/app-hello-world/RelWithDebInfo$ ./EoosAppHelloWorld
+REPOSITORY/APPS/build/codebase/app-hello-world$ ./EoosAppHelloWorld
 Hello, World!
 Your program name is EoosAppHelloWorld
 God has pity on you :)
@@ -117,7 +119,7 @@ God has pity on you :)
 The application writes message to *stderr* if wrong number of input arguments passed.
 
 ```
-REPOSITORY/APPS/build/codebase/app-hello-world/RelWithDebInfo$ ./EoosAppHelloWorld Think Create Win Destroy
+REPOSITORY/APPS/build/codebase/app-hello-world$ ./EoosAppHelloWorld Think Create Win Destroy
 Goodbye, World.
 You do not want more than three God's directives given.
 ```

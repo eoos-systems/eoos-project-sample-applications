@@ -3,15 +3,13 @@
 # @author    Sergey Baigudin, sergey@baigudin.software
 # @copyright 2022, Sergey Baigudin, Baigudin Software
 
-add_executable(target-eoos-app-hello-world)
-
-target_sources(target-eoos-app-hello-world
-PRIVATE
+add_executable(target-eoos-app-hello-world
     "${CMAKE_CURRENT_LIST_DIR}/source/Program.cpp"
 )
 
 target_link_libraries(target-eoos-app-hello-world
 PRIVATE
+    Threads::Threads
     eoos::main
 )
 

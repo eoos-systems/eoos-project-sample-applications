@@ -4,7 +4,7 @@
 # @copyright 2022, Sergey Baigudin, Baigudin Software
 
 cmake_minimum_required(VERSION 3.20)
-project(eoos-sample-application VERSION 1.0.0 LANGUAGES CXX)
+project(eoos-sample-application VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -21,6 +21,6 @@ else()
 message(FATAL_ERROR "EOOS Sample Application cannot be built for your OS")
 endif()
 
-find_package(EOOS 0.9.0 REQUIRED)
+find_package(EOOS 0.10.0 REQUIRED)
 
 add_subdirectory(codebase)

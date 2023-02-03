@@ -16,7 +16,6 @@ if(UNIX)
 target_link_libraries(target-eoos-app-hello-world
 PRIVATE
     Threads::Threads
-    eoos::main
 )
 endif()
 

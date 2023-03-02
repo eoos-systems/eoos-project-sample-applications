@@ -18,7 +18,7 @@ int32_t Program::start(api::List<char_t*>& args)
         lib::Stream::cerr() 
             << "Goodbye, World.\n"
             << "You do not want more than three God's directives given.\n";
-        return -1;
+        return 1;
     }
     lib::UniquePointer< api::ListIterator<char_t*> > it( args.getListIterator(0) );
     if( it.isNull() )
@@ -26,7 +26,7 @@ int32_t Program::start(api::List<char_t*>& args)
         lib::Stream::cerr()
             << "World crashed.\n"
             << "God has no comment here, ask Sergey Baigudin\n";
-        return -2;
+        return 2;
     }
     lib::Stream::cout() << "Hello, World!\n";
     lib::Stream::cout() << "Your program name is " << it->getNext() << "\n";

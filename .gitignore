@@ -1,5 +1,6 @@
 # Common files
 build
+__pycache__
 
 # Compiled Object files
 *.o

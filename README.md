@@ -24,8 +24,8 @@ The sample applications can be built within an EOOS Automotive system, which can
 ## 1. How-to Build Sample Applications
 
 All the Sample Applications are built by one root CMake project, but each CMake target of each application 
-can be built independly, and this project can be revised as an example that can be easily modified for purpose 
-to fast start for developing a new production project.
+can be built independly, and this project can be revised as an example that can be easily modified for 
+purpose to fast start for developing a new production project.
 
 #### 1.1. Prerequisites
 
@@ -34,11 +34,11 @@ please read Prerequisites chapters for a system you try to build the Sample Appl
 
 #### 1.2. Obtain Git Repository
 
-This chapter will be described common approach for a system terminal, which can be different depending 
-on operating system chosen for development. Thus, to generalize the approach here, we will give examples 
-for *Bash* that can be executed on Windows and on Linux.
+This chapter will describe common approach for a system terminal, which can be different depending 
+on operating system chosen for developing. Thus, to generalize the approach here, we will give examples 
+for *Bash* that can be executed on Linux as well as on Windows.
 
-###### 1.2.1. Create an empty directory somewhere on your disk. 
+###### 1.2.1. Create an empty directory somewhere on your disk
 
 For instance we will create *REPOSITORY*.
 
@@ -48,7 +48,7 @@ $ cd REPOSITORY
 REPOSITORY$
 ```
 
-###### 1.2.2. Clone this repository. 
+###### 1.2.2. Clone this repository
 
 For instance we will clone it to *APPS* directory by SSH.
 
@@ -63,6 +63,21 @@ REPOSITORY$ cd APPS
 ```
 
 #### 1.3. Source Code Build
+
+###### 1.3.1. Script build
+
+EOOS based applications can be built on various systems. To standardize the building process, 
+we put most common steps under the hood of the `Make.py` cross-platform script that is located 
+in `scripts/python` directory.
+
+To build sample application you can execute the next commands.
+
+```
+~/REPOSITORY/EOOS$ cd scripts/python
+~/REPOSITORY/EOOS/scripts/python$ python3 Make.py --clean --build --config RelWithDebInfo
+```
+
+###### 1.3.2. Manual build
 
 **Note:** Before building, if *build* directory exists, you can remove it by executing the command below.
 
@@ -79,8 +94,8 @@ REPOSITORY/APPS/build$ cmake ..
 REPOSITORY/APPS/build$ cmake --build . --config RelWithDebInfo
 ```
 
-**Note:** The *--config* parameter can be set *Release*, *Debug*, *RelWithDebInfo*, *MinSizeRel* configurations,
-but this configuration must match the EOOS configuration installed on your operating system.
+**Note:** The *--config* parameter can be set *Release*, *Debug*, *RelWithDebInfo*, *MinSizeRel* configurations, but this configuration must match the EOOS configuration installed on 
+your operating system.
 
 ## 2. How-to Execute Sample Applications
 

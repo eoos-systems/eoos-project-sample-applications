@@ -66,11 +66,11 @@ REPOSITORY$ cd APPS
 
 ###### 1.3.1. Script build
 
-EOOS based applications can be built on various systems. To standardize the building process, 
+EOOS based Sample Applications can be built on various systems. To standardize the building process, 
 we put most common steps under the hood of the `Make.py` cross-platform script that is located 
 in `scripts/python` directory.
 
-To build sample application you can execute the next commands.
+To build Sample Applications you can execute the commands below.
 
 ```
 ~/REPOSITORY/EOOS$ cd scripts/python

@@ -9,7 +9,7 @@ import argparse
 import shutil
 import subprocess
 from common.Message import Message
-from common.Os import Os
+from common.System import System
 
 class Program():
 
@@ -129,27 +129,27 @@ class Program():
 
 
     def __get_run_ut_executable_path_to(self):
-        if Os.is_posix():
+        if System.is_posix():
             return f'./codebase/app-hello-world'
-        elif Os.is_win32():
+        elif System.is_win32():
             return f'./codebase/app-hello-world/{self.__args.config}'
         else:
             raise Exception(f'Unknown OS to build')
 
 
     def __get_run_ut_executable_path_back(self):
-        if Os.is_posix():
+        if System.is_posix():
             return f'./../..'
-        elif Os.is_win32():
+        elif System.is_win32():
             return f'./../../..'
         else:
             raise Exception(f'Unknown OS to build')
 
 
     def __get_run_executable(self):
-        if Os.is_posix():
+        if System.is_posix():
             return f'./EoosAppHelloWorld'
-        elif Os.is_win32():
+        elif System.is_win32():
             return f'EoosAppHelloWorld.exe'
         else:
             raise Exception(f'Unknown OS to build')

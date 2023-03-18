@@ -61,72 +61,76 @@ class Program():
     def __do_build(self):
         if self.__args.build is not True:    
             return
-        os.chdir(self.__PATH_TO_BUILD_DIR)
-        ret = subprocess.run(['cmake', '..']).returncode
-        os.chdir(self.__PATH_TO_SCRIPT_DIR)        
-        if ret != 0:
-            raise Exception(f'CMake project is not generated with code [{ret}]')
-        Message.out(f'[BUILD] Building CMake project...', Message.INF)
-        args = ['cmake', '--build', '.', '--config', self.__args.config]
+        
+        Message.out(f'[BUILD] Generating CMake project...', Message.INF)
+        args = ['cmake']
+        if System.is_posix() is True:
+            args.append('-DCMAKE_BUILD_TYPE=' + self.__args.config)
+        args.append('..')
+        self.__run_subprocess_from_build_dir(args)
+
+        args.clear()
+        if System.is_win32():
+            Message.out(f'[BUILD] Building CMake project...', Message.INF)
+            args = ['cmake', '--build', '.', '--config', self.__args.config]
+        elif System.is_posix():
+            Message.out(f'[BUILD] Building Make project...', Message.INF)
+            args = ['make', 'all']
+        else:
+            raise Exception(f'Unknown host operating system')
         if self.__args.jobs is not None:
-            args.append('-j') 
-            args.append(str(self.__args.jobs))        
-        os.chdir(self.__PATH_TO_BUILD_DIR)
-        ret = subprocess.run(args).returncode
-        os.chdir(self.__PATH_TO_SCRIPT_DIR)        
-        if ret != 0:
-            raise Exception(f'CMake project is not built with code [{ret}]')        
+            args.extend(['-j', str(self.__args.jobs)]) 
+        self.__run_subprocess_from_build_dir(args)
 
 
     def __do_run_app_hello_world(self):
         if self.__args.run is not True:    
             return        
+        args = []
+        path_to = f'{self.__PATH_TO_BUILD_DIR}/{self.__get_run_ut_executable_path_to()}'
+        path_back = f'{self.__get_run_ut_executable_path_back()}/{self.__PATH_TO_SCRIPT_DIR}'        
     
-        Message.out(f'[RUN] EoosAppHelloWorld with 0 arg...', Message.INF)
-        os.chdir(self.__PATH_TO_BUILD_DIR)
-        os.chdir(self.__get_run_ut_executable_path_to())
-        ret = subprocess.run([self.__get_run_executable()]).returncode
-        os.chdir(self.__get_run_ut_executable_path_back())
-        os.chdir(self.__PATH_TO_SCRIPT_DIR)
-        if ret != 0:
-            raise Exception(f'UT execution error with exit code [{ret}]')
+        Message.out(f'[RUN] EoosAppHelloWorld with 0 arg...', Message.INF)        
+        args.clear()
+        args.extend([self.__get_run_executable()])
+        self.__run_subprocess_from_build_dir(args, path_to, path_back)
 
         Message.out(f'[RUN] EoosAppHelloWorld with 1 arg...', Message.INF)
-        os.chdir(self.__PATH_TO_BUILD_DIR)
-        os.chdir(self.__get_run_ut_executable_path_to())
-        ret = subprocess.run([self.__get_run_executable(), 'Think']).returncode
-        os.chdir(self.__get_run_ut_executable_path_back())
-        os.chdir(self.__PATH_TO_SCRIPT_DIR)
-        if ret != 0:
-            raise Exception(f'UT execution error with exit code [{ret}]')            
+        args.clear()
+        args.extend([self.__get_run_executable(), 'Think'])
+        self.__run_subprocess_from_build_dir(args, path_to, path_back)
         
         Message.out(f'[RUN] EoosAppHelloWorld with 2 arg...', Message.INF)
-        os.chdir(self.__PATH_TO_BUILD_DIR)
-        os.chdir(self.__get_run_ut_executable_path_to())
-        ret = subprocess.run([self.__get_run_executable(), 'Think', 'Create']).returncode
-        os.chdir(self.__get_run_ut_executable_path_back())
-        os.chdir(self.__PATH_TO_SCRIPT_DIR)
-        if ret != 0:
-            raise Exception(f'UT execution error with exit code [{ret}]')
+        args.clear()
+        args.extend([self.__get_run_executable(), 'Think', 'Create'])
+        self.__run_subprocess_from_build_dir(args, path_to, path_back)
 
         Message.out(f'[RUN] EoosAppHelloWorld with 3 arg...', Message.INF)
-        os.chdir(self.__PATH_TO_BUILD_DIR)
-        os.chdir(self.__get_run_ut_executable_path_to())
-        ret = subprocess.run([self.__get_run_executable(), 'Think', 'Create', 'Win']).returncode
-        os.chdir(self.__get_run_ut_executable_path_back())
-        os.chdir(self.__PATH_TO_SCRIPT_DIR)
-        if ret != 0:
-            raise Exception(f'UT execution error with exit code [{ret}]')
-        
-        Message.out(f'[RUN] EoosAppHelloWorld with 4 arg...', Message.INF)
-        os.chdir(self.__PATH_TO_BUILD_DIR)
-        os.chdir(self.__get_run_ut_executable_path_to())
-        ret = subprocess.run([self.__get_run_executable(), 'Think', 'Create', 'Win', 'Destroy']).returncode
-        os.chdir(self.__get_run_ut_executable_path_back())
-        os.chdir(self.__PATH_TO_SCRIPT_DIR)
-        if ret != 1:
-            raise Exception(f'UT execution error with exit code [{ret}]')
+        args.clear()
+        args.extend([self.__get_run_executable(), 'Think', 'Create', 'Win'])
+        self.__run_subprocess_from_build_dir(args, path_to, path_back)
 
+        Message.out(f'[RUN] EoosAppHelloWorld with 4 arg...', Message.INF)
+        args.clear()
+        args.extend([self.__get_run_executable(), 'Think', 'Create', 'Win', 'Destroy'])
+        res = self.__run_subprocess_from_build_dir(args, path_to, path_back, False)
+        if res != 1:
+            raise Exception(f'CMake project is not built with code [{ret}]')
+
+
+
+    def __run_subprocess_from_build_dir(self, args, path_to=None, path_back=None, check_result=True):
+        if path_to is None: 
+            path_to = self.__PATH_TO_BUILD_DIR
+        if path_back is None:
+            path_back = self.__PATH_TO_SCRIPT_DIR
+        os.chdir(path_to)
+        res = subprocess.run(args).returncode        
+        os.chdir(path_back)
+        if check_result is True and res != 0:
+            raise Exception(f'CMake project is not built with code [{ret}]')
+        return res
+        
 
     def __get_run_ut_executable_path_to(self):
         if System.is_posix():
@@ -134,7 +138,7 @@ class Program():
         elif System.is_win32():
             return f'./codebase/app-hello-world/{self.__args.config}'
         else:
-            raise Exception(f'Unknown OS to build')
+            raise Exception(f'Unknown host operating system')
 
 
     def __get_run_ut_executable_path_back(self):
@@ -143,7 +147,7 @@ class Program():
         elif System.is_win32():
             return f'./../../..'
         else:
-            raise Exception(f'Unknown OS to build')
+            raise Exception(f'Unknown host operating system')
 
 
     def __get_run_executable(self):
@@ -152,8 +156,7 @@ class Program():
         elif System.is_win32():
             return f'EoosAppHelloWorld.exe'
         else:
-            raise Exception(f'Unknown OS to build')
-
+            raise Exception(f'Unknown host operating system')
 
 
     def __check_run_path(self):

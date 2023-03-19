@@ -8,10 +8,15 @@ import time
 import argparse
 import shutil
 import subprocess
-from common.Message import Message
-from common.System import System
 
-class Program():
+from abc import ABC, abstractmethod
+from common.IProgram import IProgram
+from common.Message import Message
+
+class Program(IProgram):
+    """
+    Abstatact base program.
+    """
 
     def __init__(self):
         self.__args = None
@@ -27,7 +32,7 @@ class Program():
             self.__print_args()
             self.__do_clean()
             self.__do_create()
-            self.__do_build()
+            self._do_build()
             self.__do_run_app_hello_world()
         except Exception as e:
             Message.out(f'[EXCEPTION] {e}', Message.ERR)        
@@ -41,10 +46,65 @@ class Program():
             time_execute = round(time.time() - time_start, 9)
             Message.out(f'{self.__PROGRAM_NAME} has{not_word} been completed in {str(time_execute)} seconds', status, is_block=True)
             return error
-          
-          
+
+
+    @abstractmethod
+    def _do_build(self):
+        """
+        Builds EOOS system.
+        """
+        pass
+
+
+    @abstractmethod
+    def _get_run_ut_executable_path_to(self):
+        """
+        Returns path to EOOS application executable file.
+        """
+        pass
+
+
+    @abstractmethod
+    def _get_run_ut_executable_path_back(self):
+        """
+        Returns path back from EOOS UT executable file.
+        """
+        pass
+
+
+    @abstractmethod
+    def _get_run_executable(self):
+        """
+        Returns UT executablr file name.
+        """
+        pass
+
+
+    def _run_subprocess_from_build_dir(self, args, path_to=None, path_back=None, check_result=True):
+        """
+        Runs a sub-process with given args changing current working directory.
+        """
+        if path_to is None: 
+            path_to = self.__PATH_TO_BUILD_DIR
+        if path_back is None:
+            path_back = self.__PATH_TO_SCRIPT_DIR
+        os.chdir(path_to)
+        res = subprocess.run(args).returncode        
+        os.chdir(path_back)
+        if check_result is True and res != 0:
+            raise Exception(f'CMake project is not built with code [{ret}]')
+        return res
+        
+
+    def _get_args(self):
+        """
+        Returns program arguments.
+        """
+        return self.__args
+
+
     def __do_clean(self):
-        if self.__args.clean is not True:    
+        if self._get_args().clean is not True:    
             return
         if os.path.isdir(self.__PATH_TO_BUILD_DIR):
             Message.out(f'[BUILD] Deleting "build" directory...', Message.INF)        
@@ -58,105 +118,39 @@ class Program():
             os.makedirs(self.__PATH_TO_BUILD_DIR + '/CMakeInstallDir')
 
 
-    def __do_build(self):
-        if self.__args.build is not True:    
-            return
-        
-        Message.out(f'[BUILD] Generating CMake project...', Message.INF)
-        args = ['cmake']
-        if System.is_posix() is True:
-            args.append('-DCMAKE_BUILD_TYPE=' + self.__args.config)
-        args.append('..')
-        self.__run_subprocess_from_build_dir(args)
-
-        args.clear()
-        if System.is_win32():
-            Message.out(f'[BUILD] Building CMake project...', Message.INF)
-            args = ['cmake', '--build', '.', '--config', self.__args.config]
-        elif System.is_posix():
-            Message.out(f'[BUILD] Building Make project...', Message.INF)
-            args = ['make', 'all']
-        else:
-            raise Exception(f'Unknown host operating system')
-        if self.__args.jobs is not None:
-            args.extend(['-j', str(self.__args.jobs)]) 
-        self.__run_subprocess_from_build_dir(args)
-
-
     def __do_run_app_hello_world(self):
-        if self.__args.run is not True:    
+        if self._get_args().run is not True:    
             return        
         args = []
-        path_to = f'{self.__PATH_TO_BUILD_DIR}/{self.__get_run_ut_executable_path_to()}'
-        path_back = f'{self.__get_run_ut_executable_path_back()}/{self.__PATH_TO_SCRIPT_DIR}'        
+        path_to = f'{self.__PATH_TO_BUILD_DIR}/{self._get_run_ut_executable_path_to()}'
+        path_back = f'{self._get_run_ut_executable_path_back()}/{self.__PATH_TO_SCRIPT_DIR}'        
     
         Message.out(f'[RUN] EoosAppHelloWorld with 0 arg...', Message.INF)        
         args.clear()
-        args.extend([self.__get_run_executable()])
-        self.__run_subprocess_from_build_dir(args, path_to, path_back)
+        args.extend([self._get_run_executable()])
+        self._run_subprocess_from_build_dir(args, path_to, path_back)
 
         Message.out(f'[RUN] EoosAppHelloWorld with 1 arg...', Message.INF)
         args.clear()
-        args.extend([self.__get_run_executable(), 'Think'])
-        self.__run_subprocess_from_build_dir(args, path_to, path_back)
+        args.extend([self._get_run_executable(), 'Think'])
+        self._run_subprocess_from_build_dir(args, path_to, path_back)
         
         Message.out(f'[RUN] EoosAppHelloWorld with 2 arg...', Message.INF)
         args.clear()
-        args.extend([self.__get_run_executable(), 'Think', 'Create'])
-        self.__run_subprocess_from_build_dir(args, path_to, path_back)
+        args.extend([self._get_run_executable(), 'Think', 'Create'])
+        self._run_subprocess_from_build_dir(args, path_to, path_back)
 
         Message.out(f'[RUN] EoosAppHelloWorld with 3 arg...', Message.INF)
         args.clear()
-        args.extend([self.__get_run_executable(), 'Think', 'Create', 'Win'])
-        self.__run_subprocess_from_build_dir(args, path_to, path_back)
+        args.extend([self._get_run_executable(), 'Think', 'Create', 'Win'])
+        self._run_subprocess_from_build_dir(args, path_to, path_back)
 
         Message.out(f'[RUN] EoosAppHelloWorld with 4 arg...', Message.INF)
         args.clear()
-        args.extend([self.__get_run_executable(), 'Think', 'Create', 'Win', 'Destroy'])
-        res = self.__run_subprocess_from_build_dir(args, path_to, path_back, False)
+        args.extend([self._get_run_executable(), 'Think', 'Create', 'Win', 'Destroy'])
+        res = self._run_subprocess_from_build_dir(args, path_to, path_back, False)
         if res != 1:
             raise Exception(f'CMake project is not built with code [{ret}]')
-
-
-
-    def __run_subprocess_from_build_dir(self, args, path_to=None, path_back=None, check_result=True):
-        if path_to is None: 
-            path_to = self.__PATH_TO_BUILD_DIR
-        if path_back is None:
-            path_back = self.__PATH_TO_SCRIPT_DIR
-        os.chdir(path_to)
-        res = subprocess.run(args).returncode        
-        os.chdir(path_back)
-        if check_result is True and res != 0:
-            raise Exception(f'CMake project is not built with code [{ret}]')
-        return res
-        
-
-    def __get_run_ut_executable_path_to(self):
-        if System.is_posix():
-            return f'./codebase/app-hello-world'
-        elif System.is_win32():
-            return f'./codebase/app-hello-world/{self.__args.config}'
-        else:
-            raise Exception(f'Unknown host operating system')
-
-
-    def __get_run_ut_executable_path_back(self):
-        if System.is_posix():
-            return f'./../..'
-        elif System.is_win32():
-            return f'./../../..'
-        else:
-            raise Exception(f'Unknown host operating system')
-
-
-    def __get_run_executable(self):
-        if System.is_posix():
-            return f'./EoosAppHelloWorld'
-        elif System.is_win32():
-            return f'EoosAppHelloWorld.exe'
-        else:
-            raise Exception(f'Unknown host operating system')
 
 
     def __check_run_path(self):
@@ -201,16 +195,16 @@ class Program():
         
         
     def __print_args(self):
-        if self.__args.clean is True:
-            Message.out(f'[INFO] Argument CLEAN = {self.__args.clean}', Message.INF)
-        if self.__args.build is True:
-            Message.out(f'[INFO] Argument BUILD = {self.__args.build}', Message.INF)
-        if self.__args.run is True:
-            Message.out(f'[INFO] Argument RUN = {self.__args.run}', Message.INF)            
-        if self.__args.config is not None:
-            Message.out(f'[INFO] Argument CONFIG = {self.__args.config}', Message.INF)
-        if self.__args.jobs is not None:
-            Message.out(f'[INFO] Argument JOBS = {self.__args.jobs}', Message.INF)
+        if self._get_args().clean is True:
+            Message.out(f'[INFO] Argument CLEAN = {self._get_args().clean}', Message.INF)
+        if self._get_args().build is True:
+            Message.out(f'[INFO] Argument BUILD = {self._get_args().build}', Message.INF)
+        if self._get_args().run is True:
+            Message.out(f'[INFO] Argument RUN = {self._get_args().run}', Message.INF)            
+        if self._get_args().config is not None:
+            Message.out(f'[INFO] Argument CONFIG = {self._get_args().config}', Message.INF)
+        if self._get_args().jobs is not None:
+            Message.out(f'[INFO] Argument JOBS = {self._get_args().jobs}', Message.INF)
 
 
     __PROGRAM_NAME = 'EOOS Sample Application Builder'

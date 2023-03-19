@@ -11,7 +11,7 @@ class ProgramOnWin32(Program):
     Program on WIN32.
     """
    
-    def __do_build(self):
+    def _do_build(self):
         if self._get_args().build is not True:    
             return
         

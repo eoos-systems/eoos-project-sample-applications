@@ -149,7 +149,7 @@ class Program(IProgram):
         args.clear()
         args.extend([self._get_run_executable(), 'Think', 'Create', 'Win', 'Destroy'])
         res = self._run_subprocess_from_build_dir(args, path_to, path_back, False)
-        if res != 1:
+        if res != 2:
             raise Exception(f'CMake project is not built with code [{ret}]')
 
 
@@ -208,6 +208,6 @@ class Program(IProgram):
 
 
     __PROGRAM_NAME = 'EOOS Sample Application Builder'
-    __PROGRAM_VERSION = '1.0.0'
+    __PROGRAM_VERSION = '1.1.0'
     __PATH_TO_BUILD_DIR = './../../build'
     __PATH_TO_SCRIPT_DIR = "./../scripts/python"

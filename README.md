@@ -17,6 +17,7 @@ on **a safety-certified OS** like **QNX**.
 The sample applications can be built within an EOOS Automotive system, which can be:
 - **[EOOS Automotive WIN32](https://gitflic.ru/project/baigudin-software/eoos-project-if-win32)**
 - **[EOOS Automotive POSIX](https://gitflic.ru/project/baigudin-software/eoos-project-if-posix)**
+- **[EOOS Automotive FreeRTOS](https://gitflic.ru/project/baigudin-software/eoos-project-if-freertos-cm3-hk32f103vet6-evk)**
 - **EOOS Automotive RT** migration soon based on [BOOS Core R3](https://gitflic.ru/project/baigudin/boos-core-rev3).
 
 ---

@@ -15,9 +15,9 @@ and **debuged and tested** either on **real hardware under EOOS RT Safe**, or
 on **a safety-certified OS** like **QNX**.
 
 The sample applications can be built within an EOOS Safe system, which can be:
-- **[EOOS Safe WIN32](https://gitflic.ru/project/baigudin-software/eoos-project-if-win32)**
-- **[EOOS Safe POSIX](https://gitflic.ru/project/baigudin-software/eoos-project-if-posix)**
-- **[EOOS Safe FreeRTOS](https://gitflic.ru/project/baigudin-software/eoos-project-if-freertos-cm3-hk32f103vet6-evk)**
+- **[EOOS Safe WIN32](https://gitflic.ru/project/eoos-systems/eoos-project-if-win32)**
+- **[EOOS Safe POSIX](https://gitflic.ru/project/eoos-systems/eoos-project-if-posix)**
+- **[EOOS Safe FreeRTOS](https://gitflic.ru/project/eoos-systems/eoos-project-if-freertos-cm3-hk32f103vet6-evk)**
 - **EOOS RT Safe** migration soon based on [BOOS Core R3](https://gitflic.ru/project/baigudin/boos-core-rev3).
 
 ---
@@ -54,7 +54,7 @@ REPOSITORY$
 For instance we will clone it to *APPS* directory by SSH.
 
 ```
-REPOSITORY$ git clone --branch master git@gitflic.ru:baigudin-software/eoos-project-sample-applications.git APPS
+REPOSITORY$ git clone --branch master git@gitflic.ru:eoos-systems/eoos-project-sample-applications.git APPS
 ```
 
 ###### 1.2.3. Go the APPS directory

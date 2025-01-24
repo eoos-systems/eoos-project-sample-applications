@@ -1,7 +1,7 @@
 # EOOS Sample Application.
 #
 # @author    Sergey Baigudin, sergey@baigudin.software
-# @copyright 2022, Sergey Baigudin, Baigudin Software
+# @copyright 2022-2025, Sergey Baigudin, Baigudin Software
 
 cmake_minimum_required(VERSION 3.10)
 project(eoos-sample-application VERSION 0.2.0 LANGUAGES CXX)
@@ -21,6 +21,6 @@ else()
 message(FATAL_ERROR "EOOS Sample Application cannot be built for your OS")
 endif()
 
-find_package(EOOS 0.11.0 REQUIRED)
+find_package(EOOS 0.13.0 REQUIRED)
 
 add_subdirectory(codebase)
